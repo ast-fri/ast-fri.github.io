@@ -2,7 +2,7 @@
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
-        const offset = 80; // Offset for better viewing
+        const offset = 80;
         const sectionPosition = section.offsetTop - offset;
 
         window.scrollTo({
@@ -53,6 +53,87 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
+// Publications scroll functionality
+function initPublicationsScroll() {
+    const scrollContainer = document.getElementById('publicationsScroll');
+    const leftArrow = document.getElementById('scrollLeft');
+    const rightArrow = document.getElementById('scrollRight');
+
+    if (!scrollContainer || !leftArrow || !rightArrow) return;
+
+    const scrollAmount = 400; // Scroll by one card width approximately
+
+    // Left arrow click
+    leftArrow.addEventListener('click', () => {
+        scrollContainer.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+        });
+    });
+
+    // Right arrow click
+    rightArrow.addEventListener('click', () => {
+        scrollContainer.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+    });
+
+    // Update arrow visibility based on scroll position
+    function updateArrowVisibility() {
+        const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+        
+        if (scrollContainer.scrollLeft <= 0) {
+            leftArrow.style.opacity = '0.3';
+            leftArrow.style.cursor = 'not-allowed';
+        } else {
+            leftArrow.style.opacity = '1';
+            leftArrow.style.cursor = 'pointer';
+        }
+
+        if (scrollContainer.scrollLeft >= maxScroll - 5) {
+            rightArrow.style.opacity = '0.3';
+            rightArrow.style.cursor = 'not-allowed';
+        } else {
+            rightArrow.style.opacity = '1';
+            rightArrow.style.cursor = 'pointer';
+        }
+    }
+
+    scrollContainer.addEventListener('scroll', updateArrowVisibility);
+    updateArrowVisibility(); // Initial check
+
+    // Drag to scroll functionality
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    scrollContainer.addEventListener('mousedown', (e) => {
+        isDown = true;
+        scrollContainer.style.cursor = 'grabbing';
+        startX = e.pageX - scrollContainer.offsetLeft;
+        scrollLeft = scrollContainer.scrollLeft;
+    });
+
+    scrollContainer.addEventListener('mouseleave', () => {
+        isDown = false;
+        scrollContainer.style.cursor = 'grab';
+    });
+
+    scrollContainer.addEventListener('mouseup', () => {
+        isDown = false;
+        scrollContainer.style.cursor = 'grab';
+    });
+
+    scrollContainer.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - scrollContainer.offsetLeft;
+        const walk = (x - startX) * 2;
+        scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+}
+
 // Observe elements for animation
 document.addEventListener('DOMContentLoaded', () => {
     // Add fade-in animation to sections
@@ -64,38 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
-    // Add smooth scroll behavior for publication cards
-    const publicationsScroll = document.querySelector('.publications-scroll');
-    if (publicationsScroll) {
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        publicationsScroll.addEventListener('mousedown', (e) => {
-            isDown = true;
-            publicationsScroll.style.cursor = 'grabbing';
-            startX = e.pageX - publicationsScroll.offsetLeft;
-            scrollLeft = publicationsScroll.scrollLeft;
-        });
-
-        publicationsScroll.addEventListener('mouseleave', () => {
-            isDown = false;
-            publicationsScroll.style.cursor = 'grab';
-        });
-
-        publicationsScroll.addEventListener('mouseup', () => {
-            isDown = false;
-            publicationsScroll.style.cursor = 'grab';
-        });
-
-        publicationsScroll.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - publicationsScroll.offsetLeft;
-            const walk = (x - startX) * 2;
-            publicationsScroll.scrollLeft = scrollLeft - walk;
-        });
-    }
+    // Initialize publications scroll
+    initPublicationsScroll();
 
     // Add hover effect to team members
     const teamMembers = document.querySelectorAll('.team-member');
