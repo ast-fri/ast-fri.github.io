@@ -230,7 +230,7 @@ body {
     display: none;
 }
 
-#research-image[src]:not([src=""]):not([src="static/images/contributions.png"]) {
+#research-image[src]:not([src=""]):not([src="/static/images/contributions.png"]) {
     display: block;
 }
 
