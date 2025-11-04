@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         researchImage.addEventListener('load', function() {
-            if (this.src && this.src !== window.location.href + 'research-image.jpg') {
+            if (this.src && this.src !== window.location.href + 'static/images/contributions.png') {
                 this.style.display = 'block';
                 this.nextElementSibling.style.display = 'none';
             }
