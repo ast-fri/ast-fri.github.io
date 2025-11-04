@@ -309,7 +309,6 @@ body {
 }
 
 /* Publications Section */
-/* Publications Section */
 .publications-section {
     background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
 }
@@ -395,7 +394,6 @@ body {
     scroll-snap-align: start;
     border-left: 4px solid var(--accent-color);
     position: relative;
-    padding-top: 50px;
     display: flex;
     flex-direction: column;
 }
@@ -409,13 +407,12 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    margin-bottom: 15px;
 }
 
-/* Venue Badge Styles */
+/* Venue Badge Styles - NOW AT BOTTOM */
 .venue-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
+    position: static;
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -423,6 +420,14 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    align-self: flex-start;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.venue-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .venue-badge.acl {
@@ -432,6 +437,11 @@ body {
 
 .venue-badge.emnlp {
     background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+.venue-badge.naacl {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     color: white;
 }
 
@@ -477,6 +487,7 @@ body {
     font-size: 0.9rem;
     align-self: flex-start;
 }
+
 
 /* Footer */
 .footer {
