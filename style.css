@@ -227,12 +227,17 @@ body {
 }
 
 #research-image {
-    display: none;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  visibility: visible;
+  opacity: 1;
 }
 
-#research-image[src]:not([src=""]):not([src="/static/images/contributions.png"]) {
+
+/* #research-image[src]:not([src=""]):not([src="/static/images/contributions.png"]) {
     display: block;
-}
+} */
 
 .image-caption {
     color: var(--text-light);
